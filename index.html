@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KK&A | Chartered Accountants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --midnight: #050a14;
+            --gold: #bd9354;
+            --cream: #fcfaf7;
+            --text: #2c2c2c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--cream); 
+            color: var(--text); 
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 10%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            transition: 0.5s ease;
+        }
+        nav.scrolled { background: rgba(252, 250, 247, 0.98); padding: 15px 10%; backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        
+        .logo { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 4px; color: white; text-decoration: none; z-index: 1001; }
+        nav.scrolled .logo { color: var(--midnight); }
+        
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 40px; }
+        .nav-links li a { 
+            text-decoration: none; color: white; font-size: 0.75rem; 
+            letter-spacing: 2px; transition: 0.3s; opacity: 0.8;
+        }
+        nav.scrolled .nav-links li a { color: var(--midnight); }
+        .nav-links li a:hover { opacity: 1; color: var(--gold) !important; }
+
+        .burger { display: none; cursor: pointer; z-index: 1001; }
+        .burger div { width: 25px; height: 2px; background-color: white; margin: 5px; transition: all 0.3s ease; }
+        nav.scrolled .burger div { background-color: var(--midnight); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(5, 10, 20, 0.4), rgba(5, 10, 20, 0.4)), 
+                        url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center; color: white; text-align: center;
+        }
+        
+        /* UPDATED: h1 font size reduced here */
+        .hero h1 { 
+            font-family: 'Cinzel', serif; 
+            font-size: clamp(1.4rem, 4vw, 2.5rem); 
+            font-weight: 400; 
+            margin-bottom: 20px; 
+            letter-spacing: 8px; /* Reduced letter spacing slightly for better fit */
+        }
+
+        .hero p { 
+            font-size: 1.1rem; 
+            font-weight: 600;  
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            color: var(--gold); 
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1.5s ease;
+        }
+
+        /* --- Sections --- */
+        section { padding: 100px 10%; }
+        h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 40px; text-align: center; letter-spacing: 3px; }
+        .about-content { text-align: center; max-width: 700px; margin: 0 auto; font-weight: 300; font-size: 1rem; }
+
+        /* --- Services Grid --- */
+        .services { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 30px; 
+            margin-top: 50px; 
+        }
+        .service-item { 
+            flex: 0 1 350px;
+            text-align: center; 
+            padding: 40px 30px; 
+            background: #fff; 
+            transition: 0.5s; 
+            border: 1px solid #f0f0f0;
+        }
+        .service-item h3 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; color: var(--midnight); border-bottom: 1px solid var(--gold); padding-bottom: 10px; display: inline-block; }
+        
+        .service-item ul {
+            list-style: none;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #555;
+            padding: 0;
+        }
+        .service-item ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+        .service-item ul li::before {
+            content: "•";
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .service-item:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
+
+        /* --- Contact Section --- */
+        .contact { background: var(--midnight); color: white; text-align: center; }
+        .contact h2 { color: var(--gold); }
+        .contact-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 40px; 
+            margin-top: 40px; 
+        }
+        .contact-info { 
+            flex: 1 1 250px; 
+            text-align: center; 
+        }
+        .contact-info h4 { font-size: 0.7rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px; }
+        .contact-info p { font-size: 0.9rem; opacity: 0.7; word-wrap: break-word; }
+
+        /* --- Animation --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        footer { background: var(--midnight); padding: 40px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 2px; border-top: 1px solid #111; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; right: 0; top: 0; height: 100vh; background: var(--cream);
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                width: 100%; transform: translateX(100%); transition: transform 0.5s ease-in; z-index: 1000;
+            }
+            .nav-links li { margin: 25px 0; }
+            .nav-links li a { color: var(--midnight); font-size: 1.2rem; }
+            .burger { display: block; }
+            .nav-active { transform: translateX(0%); }
+            .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+            .toggle .line2 { opacity: 0; }
+            .toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+            
+            .hero p { font-size: 0.9rem; letter-spacing: 2px; }
+            .service-item { flex: 1 1 100%; }
+            .contact-info { flex: 1 1 100%; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="#" class="logo">KUSH KHATRI & ASSOCIATES</a>
+        <ul class="nav-links">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+        <div class="burger" id="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 class="reveal">Practical Solutions. Professional Standards.</h1>
+        <p class="reveal">Chartered Accountants • Since 2025</p>
+    </header>
+
+    <section id="about" class="reveal">
+        <h2>Vision</h2>
+        <div class="about-content">
+            <p>To be a trusted professional firm delivering ethical, accurate, and timely financial and compliance solutions that enable sustainable growth for our clients.</p>
+        </div>
+    </section>
+
+    <section id="services" style="background: white;">
+        <h2 class="reveal">Services</h2>
+        <div class="services">
+            <div class="service-item reveal">
+                <h3>Income Tax Services</h3>
+                <ul>
+                    <li>Filing of ITR (Individuals, Firms, Companies)</li>
+                    <li>Tax Computation and Advisory</li>
+                    <li>Scrutiny Assessment & Notices Handling</li>
+                    <li>Appeals before CIT(A) & Authorities</li>
+                    <li>TDS/TCS Compliance and Returns</li>
+                    <li>Advance Tax & Tax Planning</li>
+                </ul>
+            </div>
+
+            <div class="service-item reveal">
+                <h3>Goods and Services Tax</h3>
+                <ul>
+                    <li>GST Registration & Amendments</li>
+                    <li>Monthly/Quarterly Returns (GSTR-1, 3B)</li>
+                    <li>Annual Returns (GSTR-9, 9C)</li>
+                    <li>Input Tax Credit Reconciliation</li>
+                    <li>GST Audit & Compliance Review</li>
+                    <li>Notices, Assessments & Litigation Support</li>
+                </ul>
+            </div>
+
+            <div class="service-item reveal">
+                <h3>Audit & Assurance</h3>
+                <ul>
+                    <li>Statutory Audit</li>
+                    <li>Tax Audit under Income Tax Act</li>
+                    <li>Internal Audit</li>
+                    <li>GST Audit & Certification</li>
+                    <li>Stock & Concurrent Audit</li>
+                    <li>Limited Review & Certifications</li>
+                </ul>
+            </div>
+
+            <div class="service-item reveal">
+                <h3>Accounting & Bookkeeping</h3>
+                <ul>
+                    <li>Bookkeeping & Accounting Services</li>
+                    <li>Finalisation of Accounts</li>
+                    <li>MIS Reporting</li>
+                    <li>Payroll Processing & Compliance</li>
+                    <li>Accounting System Setup & Review</li>
+                </ul>
+            </div>
+
+            <div class="service-item reveal">
+                <h3>Company Law & ROC</h3>
+                <ul>
+                    <li>Company Incorporation (Private / LLP)</li>
+                    <li>Annual ROC Filings</li>
+                    <li>Director KYC & DIN Services</li>
+                    <li>Event-based ROC Filings</li>
+                    <li>LLP Compliance & Filings</li>
+                    <li>Closure / Strike-off Services</li>
+                </ul>
+            </div>
+
+            <div class="service-item reveal">
+                <h3>Business & Regulatory</h3>
+                <ul>
+                    <li>Startup Advisory & Support</li>
+                    <li>Entity Structuring Advisory</li>
+                    <li>Financial & Regulatory Due Diligence</li>
+                    <li>Compliance Health Check</li>
+                    <li>Representation before Authorities</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="reveal">Consultation</h2>
+        <div class="contact-grid reveal">
+            <div class="contact-info">
+                <h4>CONTACT NUMBER</h4>
+                <p>+91 9028786931</p>
+            </div>
+            <div class="contact-info">
+                <h4>ADDRESS</h4>
+                <p>Bhiwandi, Thane</p>
+            </div>
+            <div class="contact-info">
+                <h4>ENQUIRIES</h4>
+                <p>ca.kushkhatri@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 KUSH KHATRI & ASSOCIATES. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 80) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        const burger = document.getElementById('burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('nav-active');
+            burger.classList.toggle('toggle');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('nav-active');
+                burger.classList.remove('toggle');
+            });
+        });
+
+        const reveal = () => {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                let windowHeight = window.innerHeight;
+                let elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) el.classList.add("active");
+            });
+        };
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+</html>
